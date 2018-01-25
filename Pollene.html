@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>POLLENE</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+	<link rel="stylesheet" href="bootswatch1.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+	<!-- ..........................NONFUNCITONAL.HEADER -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="navbar-brand"><strong>POLLENE</strong></div></nav>
+
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+<!-- ....................................VERIFICATION -->
+		<div id="welcome">
+			<h1>Voat Hir</h1>
+			<button onclick="verify()">Log In</button></div>
+<!-- ....................................VOTING...... -->
+		<div id="vote">
+			<h1>Do you kno de wey?</h1>
+			<form>
+				<input type="radio" name="vote" id="radioY" value="YES">Yes<br/>
+				<input type="radio" name="vote" id="radioN" value="NO">No<br/>
+   				<input type="radio" name="vote" id="radioM" value="MAYBE">Maybe<br/>
+			</form><br/><br/>
+			<input type="button" onclick="submitVote()" value="Vote"><br/></div>
+<!-- ....................................TALLY....... -->
+		<div id="tally">
+			<h1>Moment of Trut</h1><br/>
+			<div id="columnY">
+				<h4>Congratulations! You kno de wey:</h4>
+				<div id="columnY_total" class="columnY_total"></div>
+				<div id="columnY_head">Student Numbers who voted YES:</div>
+				<div id="columnY_list" class="columnY_list"></div><br/><br/>
+			</div>
+
+			<div id="columnM">
+				<h4>Yor de Queen! You 'might' kno de wey:</h4>
+				<div id="columnM_total" class="columnM_total"></div>
+				<div id="columnM_head">Student Numbers who voted MAYBE:</div>
+				<div id="columnM_list" class="columnM_list"></div><br/><br/>
+			</div>
+
+			<div id="columnN">
+				<h4>You have a bola! You dun kno de wey:</h4>
+				<div id="columnN_total" class="columnN_total"></div>
+				<div id="columnN_head">Student Numbers who voted NO:</div>
+				<div id="columnN_list" class="columnN_list"></div><br/>
+			</div>
+			<input type="button" onclick="logOut()" value="Log Out">
+		</div>
+	</div> <!-- col-md-4 -->
+	<div class="col-md-4"></div>
+</div> <!-- class= row -->
+</div> <!-- class= container fluid -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	
+<script>
+var currStud = [];
+var verStud;
+
+
+var step1 = document.getElementById("welcome");
+var step2 = document.getElementById("vote");
+var step3 = document.getElementById("tally");
+
+var votedY = [];
+var votedN = [];
+var votedM = [];
+
+//var studName = [{sId: '001', sName: 'Bevs'},
+//				{sId: '002', sName: 'Yam'},
+//				{sId: '003', sName: 'Odin'},
+//				{sId: '004', sName: 'Lorenzo'},
+//				{sId: '005', sName: 'Cole'},
+//				{sId: '006', sName: 'John'},
+//				{sId: '007', sName: 'Nats'},
+//				{sId: '008', sName: 'JC'},
+//				{sId: '009', sName: 'Meego'},
+//				{sId: '010', sName: 'Darryl'},
+//				{sId: '011', sName: 'Jo'},
+//				];
+
+function verify() {
+    var studnum = prompt("Please enter your Student Number:", "0xx");
+    verStud = studnum;
+    if (currStud.includes(verStud)){
+		alert("You already voted")
+	}
+
+     else if (studnum == "001" || studnum == "002" || studnum == "003" || studnum == "004" || studnum == "005" || studnum == "006" || studnum == "007" || studnum == "008" || studnum == "009" || studnum == "010" || studnum == "011") {
+        step1.style.display = "none";
+        step2.style.display = "block";
+        step3.style.display = "none";
+    	currStud.push(studnum);
+    } 
+    else {
+        alert("Please enter a valid Student Number");
+    }
+    
+}
+
+
+
+var vote = document.forms[0];
+var choice;
+var i;
+
+function submitVote() {
+   for (i = 0; i < vote.length; i++) {
+       if (vote[i].checked) {
+           choice = vote[i].value;
+		}
+	}
+	if (choice === "YES") {
+        votedY.push(verStud);
+   		step1.style.display = "none";
+   		step2.style.display = "none";
+   		step3.style.display = "grid";
+    } else if (choice === "NO") {
+        votedN.push(verStud);
+   		step1.style.display = "none";
+   		step2.style.display = "none";
+   		step3.style.display = "grid";
+    } else if (choice === "MAYBE") {
+        votedM.push(verStud);
+   		step1.style.display = "none";
+   		step2.style.display = "none";
+   		step3.style.display = "grid";
+    } else {
+        alert("Please select an option");
+    }
+
+
+document.getElementById("columnY_total").innerHTML = votedY.length;
+document.getElementById("columnM_total").innerHTML = votedM.length;
+document.getElementById("columnN_total").innerHTML = votedN.length;
+
+document.getElementById("columnY_list").innerHTML = votedY.join('<br/>');
+document.getElementById("columnM_list").innerHTML = votedM.join('<br/>');
+document.getElementById("columnN_list").innerHTML = votedN.join('<br/>');
+}
+
+
+
+function logOut() {
+        step1.style.display = "block";
+        step2.style.display = "none";
+        step3.style.display = "none";
+        choice = "";
+        document.getElementById("radioY").checked = false;
+        document.getElementById("radioN").checked = false;
+        document.getElementById("radioM").checked = false;
+		
+}
+
+</script>
+</body>
+</html>
